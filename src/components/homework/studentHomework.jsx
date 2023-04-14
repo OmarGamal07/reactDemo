@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const HomeworkForm = () => {
   const [formData, setFormData] = useState({
     studentId: "",
@@ -42,15 +41,18 @@ const HomeworkForm = () => {
     formDataToSend.append("file", file);
 
     try {
+      const authToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQyYTNiZDBmNjQxZDVhYWU4MDU2NmE2IiwiZW1haWwiOiJtb2hhbWVkMkBnbWFpbC5jb20iLCJpYXQiOjE2ODA1NjY3MTl9.0cFYmztDkawqHIMN2A84YtBlqqFDRCqRfAPO39qXzSw"; // replace this with your actual authorization token
+
       const response = await fetch("http://localhost:5000/homework", {
         method: "POST",
         body: formDataToSend,
+        headers: { "x-token": authToken },
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        // Optionally, show a success message or redirect to another page.
       } else {
         console.error("Error submitting homework");
       }
